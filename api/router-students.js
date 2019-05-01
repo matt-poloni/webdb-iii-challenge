@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const tbl = 'students';
 const db = require('../data/helpers/basicModel')(tbl);
+const dbS = require('../data/helpers/studentsModel');
 const mw = require('./middleware')(tbl);
 
 router.get('/', (req, res) => {
@@ -25,7 +26,7 @@ router.post('/', mw.has('name'), (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  db.get(req.params.id)
+  dbS.getByID(req.params.id)
     .then(student => {
       student
         ? res.status(200).json(student)
