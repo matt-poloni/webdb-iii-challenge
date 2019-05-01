@@ -1,14 +1,16 @@
 const express = require('express');
 const helmet = require('helmet');
 
-// const router = require('./api/router');
+// const cohortsRouter = require('./api/router-cohorts');
+// const studentsRouter = require('./api/router-students');
 
 const server = express();
 
 server.use(helmet());
 server.use(express.json());
 
-// server.use('/api/route/', router);
+// server.use('/api/route/', cohortsRouter);
+// server.use('/api/route/', studentsRouter);
 
 server.use('/', (req, res) => {
   res.send("Up and running")
