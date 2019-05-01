@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
     })
 });
 
-router.post('/', mw.isString('name'), mw.has('name'), (req, res) => {
+router.post('/', mw.has('name'), mw.isString('name'), (req, res) => {
   db.post(req.body)
     .then(id => {
       res.status(201).json(id);
