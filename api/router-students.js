@@ -25,19 +25,17 @@ router.post('/', mw.has('name'), (req, res) => {
     })
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', mw.paramExists('id'), (req, res) => {
   dbS.getByID(req.params.id)
     .then(student => {
-      student
-        ? res.status(200).json(student)
-        : res.status(404).json({ error: "The specified ID does not exist in the students database." })
+      res.status(200).json(student)
     })
     .catch(err => {
       res.status(500).json({ error: "Could not retrieved the student at the specified ID." });
     })
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', mw.paramExists('id'), (req, res) => {
   db.put(req.params.id, req.body)
     .then(count => {
       res.status(200).json(count);
@@ -47,7 +45,7 @@ router.put('/:id', (req, res) => {
     })
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', mw.paramExists('id'), (req, res) => {
   db.del(req.params.id)
     .then(count => {
       res.status(200).json(count);
