@@ -2,6 +2,13 @@ const db = require('../data/dbConfig');
 
 module.exports = function(tbl) {
   return {
+    isString: function(prop) {
+      return function(req, res, next) {
+        typeof req.body[prop] !== 'string'
+          ? res.status(400).json({ error: `The ${prop} value must be a string.`})
+          : next();
+      }
+    },
     has: function(prop) {
       return function(req, res, next) {
         !req.body[prop]
@@ -24,8 +31,6 @@ module.exports = function(tbl) {
           ? res.status(404).json({ error: `The specified ${param} does not exist in the ${table} database.` })
           : next();
       }
-    }
+    },
   }
 }
-
-// db(tbl).where({id}).first()

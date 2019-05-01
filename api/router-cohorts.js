@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
     })
 });
 
-router.post('/', mw.has('name'), (req, res) => {
+router.post('/', mw.isString('name'), mw.has('name'), (req, res) => {
   db.post(req.body)
     .then(id => {
       res.status(201).json(id);
@@ -37,7 +37,7 @@ router.get('/:id', mw.paramExists('id'), (req, res) => {
     })
 });
 
-router.put('/:id', mw.paramExists('id'), (req, res) => {
+router.put('/:id', mw.isString('name'), mw.paramExists('id'), (req, res) => {
   db.put(req.params.id, req.body)
     .then(count => {
       res.status(200).json(count);
