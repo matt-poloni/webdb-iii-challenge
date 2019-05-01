@@ -66,7 +66,7 @@ router.get('/:id/students', mw.paramExists('id'), (req, res) => {
         : res.status(200).json(students)
     })
     .catch(err => {
-      res.status(500).json({ error: "Could not retrieve the cohort at the specified ID." });
+      res.status(500).json({ error: "Could not retrieve the students from the cohort at the specified ID." });
     })
 });
 
