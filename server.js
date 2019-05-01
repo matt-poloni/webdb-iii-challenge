@@ -9,8 +9,8 @@ const server = express();
 server.use(helmet());
 server.use(express.json());
 
-// server.use('/api/route/', cohortsRouter);
-// server.use('/api/route/', studentsRouter);
+// server.use('/api/cohorts/', cohortsRouter);
+// server.use('/api/students/', studentsRouter);
 
 server.use('/', (req, res) => {
   res.send("Up and running")
