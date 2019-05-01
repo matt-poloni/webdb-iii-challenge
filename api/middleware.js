@@ -9,6 +9,14 @@ module.exports = function(tbl) {
           : next();
       }
     },
+    propExists: function(prop = 'id', table = tbl) {
+      return async function(req, res, next) {
+        const result = await db(table).where({ [prop]: req.body[prop] });
+        !result.length
+          ? res.status(404).json({ error: `The specified ${prop} does not exist in the ${table} database.` })
+          : next();
+      }
+    },
     paramExists: function(param = 'id', table = tbl) {
       return async function(req, res, next) {
         const result = await db(table).where({ [param]: req.params[param] });
