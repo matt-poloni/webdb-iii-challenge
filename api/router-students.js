@@ -5,6 +5,7 @@ const db = require('../data/helpers/basicModel')(tbl);
 const dbS = require('../data/helpers/studentsModel');
 const mw = require('./middleware')(tbl);
 
+// *** Routes at '/' ***
 router.get('/', (req, res) => {
   db.get()
     .then(students => {
@@ -25,6 +26,7 @@ router.post('/', mw.has('name'), mw.isString('name'), (req, res) => {
     })
 });
 
+// *** Routes at '/:id' ***
 router.get('/:id', mw.paramExists('id'), (req, res) => {
   dbS.getByID(req.params.id)
     .then(student => {
