@@ -2,8 +2,10 @@ const router = require('express').Router();
 
 const tbl = 'cohorts';
 const db = require('../data/helpers/basicModel')(tbl);
+const dbC = require('../data/helpers/cohortsModel');
 const mw = require('./middleware')(tbl);
 
+// *** Routes at '/' ***
 router.get('/', (req, res) => {
   db.get()
     .then(cohorts => {
@@ -24,6 +26,7 @@ router.post('/', mw.has('name'), (req, res) => {
     })
 });
 
+// *** Routes at '/:id' ***
 router.get('/:id', (req, res) => {
   db.get(req.params.id)
     .then(cohort => {
@@ -53,6 +56,19 @@ router.delete('/:id', (req, res) => {
     })
     .catch(err => {
       res.status(500).json({ error: "Could not delete the cohort at the specified ID." });
+    })
+});
+
+// *** Route at '/:id/students' ***
+router.get('/:id/students', (req, res) => {
+  dbC.getCohortStudents(req.params.id)
+    .then(students => {
+      !students.length
+        ? res.status(404).json({ error: "The specified cohort has no students in our database." })
+        : res.status(200).json(cohort)
+    })
+    .catch(err => {
+      res.status(500).json({ error: "Could not retrieve the cohort at the specified ID." });
     })
 });
 
