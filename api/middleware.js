@@ -16,17 +16,17 @@ module.exports = function(tbl) {
           : next();
       }
     },
-    propExists: function(prop = 'id', table = tbl) {
+    propExists: function(prop = 'id', field = prop, table = tbl) {
       return async function(req, res, next) {
-        const result = await db(table).where({ [prop]: req.body[prop] });
+        const result = await db(table).where({ [field]: req.body[prop] });
         !result.length
           ? res.status(404).json({ error: `The specified ${prop} does not exist in the ${table} database.` })
           : next();
       }
     },
-    paramExists: function(param = 'id', table = tbl) {
+    paramExists: function(param = 'id', field = param, table = tbl) {
       return async function(req, res, next) {
-        const result = await db(table).where({ [param]: req.params[param] });
+        const result = await db(table).where({ [field]: req.params[param] });
         !result.length
           ? res.status(404).json({ error: `The specified ${param} does not exist in the ${table} database.` })
           : next();
